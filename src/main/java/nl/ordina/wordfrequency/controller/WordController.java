@@ -34,7 +34,7 @@ public class WordController {
     }
 
     @ApiOperation("Calculate Most Frequency N Words")
-    @GetMapping(value = "/calculateMostFrequentNWords", produces = "application/text")
+    @GetMapping(value = "/calculateMostFrequentNWords")
     public WordFrequency[] calculateMostFrequentNWords(String text, int n){
         return _frequencyService.calculateMostFrequentNWords(text, n);
     }

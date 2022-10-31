@@ -37,6 +37,9 @@ public class WordFrequencyAnalyzerService implements WordFrequencyAnalyzer
     @Override
     public WordFrequency[] calculateMostFrequentNWords(String text, int n) {
         List<String> wordArray = List.of(text.toLowerCase().trim().split("\\W+"));
+        if (n > wordArray.stream().count()){
+            return new WordFrequency[]{};
+        }
         WordFrequency[] arr = new WordFrequency[0];
         var wordFrequencies = new ArrayList<WordFrequency>();
         

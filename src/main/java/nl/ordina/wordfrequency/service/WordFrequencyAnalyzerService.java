@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import static java.lang.Math.toIntExact;
 
 @Service
+
 public class WordFrequencyAnalyzerService implements WordFrequencyAnalyzer
 {
     @Override
@@ -21,7 +22,7 @@ public class WordFrequencyAnalyzerService implements WordFrequencyAnalyzer
         //get unique occurrence
         var filteredList = wordArray.stream().distinct();
         for (String word: filteredList.toList()) {
-            Long currentWordCount = wordArray.stream().filter(x-> x.contains(word)).count();
+            long currentWordCount = wordArray.stream().filter(x-> x.contains(word)).count();
             if(currentWordCount > count) count = toIntExact(currentWordCount);
         }
         return count;
@@ -37,7 +38,7 @@ public class WordFrequencyAnalyzerService implements WordFrequencyAnalyzer
     @Override
     public WordFrequency[] calculateMostFrequentNWords(String text, int n) {
         List<String> wordArray = List.of(text.toLowerCase().trim().split("\\W+"));
-        if (n > wordArray.stream().count()){
+        if (n > (long) wordArray.size()){
             return new WordFrequency[]{};
         }
         WordFrequency[] arr = new WordFrequency[0];

@@ -23,19 +23,19 @@ public class WordController {
 
     @ApiOperation("Calculate Highest Frequency")
     @GetMapping(value = "/calculateHighestFrequency")
-    public int calculateHighestFrequency(String text){
+    public int calculateHighestFrequency(String text) throws Exception {
         return _frequencyService.calculateHighestFrequency(text);
     }
 
     @ApiOperation("Calculate Frequency For Word")
     @GetMapping(value = "/calculateFrequencyForWord")
-    public int calculateFrequencyForWord(String text, String word){
+    public int calculateFrequencyForWord(String text, String word) throws Exception{
         return _frequencyService.calculateFrequencyForWord(text, word);
     }
 
     @ApiOperation("Calculate Most Frequency N Words")
     @GetMapping(value = "/calculateMostFrequentNWords")
-    public WordFrequency[] calculateMostFrequentNWords(String text, int n){
+    public WordFrequency[] calculateMostFrequentNWords(String text, int n) throws Exception{
         return _frequencyService.calculateMostFrequentNWords(text, n);
     }
 }

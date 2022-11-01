@@ -5,7 +5,9 @@ http://localhost:8080/swagger-ui/index.html
 
 else postman or insomia endpoints
 
-Example: <b>Text</b> -> Take a look at similar question with another 3rd party 
+<i>Example:</i> 
+
+<b>Text</b> -> Take a look at similar question with another 3rd party 
 lib How to return N1qlQueryResult as the response of REST API for Couchbase databse?. 
 You do not need to convert object to JSON manually. MVC layer should do that for you. 
 In case no, there must be a way, check documentation. If you do not have a POJO you can always 

@@ -15,7 +15,6 @@ import java.util.List;
 
 public class WordFrequencyAnalyzerService implements WordFrequencyAnalyzer
 {
-
     private WordFrequency[] wordFrequencyCollection(String text){
         var words = List.of(text.toLowerCase().trim().split("\\W+"));
         if (words.size() <= 0){

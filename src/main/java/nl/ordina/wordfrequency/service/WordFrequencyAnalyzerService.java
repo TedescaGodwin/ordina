@@ -6,10 +6,10 @@ import nl.ordina.wordfrequency.model.WordFrequency;
 import nl.ordina.wordfrequency.model.WordFrequencyAnalyzer;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Stream;
-
-import static java.lang.Math.toIntExact;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 
@@ -67,6 +67,10 @@ public class WordFrequencyAnalyzerService implements WordFrequencyAnalyzer
     @Override
     public WordFrequency[] calculateMostFrequentNWords(String text, int n) {
         var wordFrequencies = wordFrequencyCollection(text);
+        if(n > Arrays.stream(wordFrequencies).count()){
+            return new WordFrequency[0];
+        }
+
         SortByFrequencyComparator sortByFrequencyComparator = new SortByFrequencyComparator();
         SortByAscendingComparator sortByAscendingComparator = new SortByAscendingComparator();
         var frequencies =
@@ -78,6 +82,4 @@ public class WordFrequencyAnalyzerService implements WordFrequencyAnalyzer
                 .toList();
         return frequencies.toArray(new WordFrequency[0]);
     }
-
-
 }

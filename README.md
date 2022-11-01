@@ -21,4 +21,4 @@ Calculate Frequency For Word http://localhost:8080/api/calculateFrequencyForWord
 
 Calculate Highest Frequency http://localhost:8080/api/calculateHighestFrequency?text={text}
 
-calculateMostFrequentNWords http://localhost:8080/api/calculateMostFrequentNWords?text={text}&n={limit}
+Calculate Most Frequent N Words http://localhost:8080/api/calculateMostFrequentNWords?text={text}&n={limit}

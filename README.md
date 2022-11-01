@@ -1,6 +1,6 @@
 # Assessment -> Tedesca 1.0
 
-You can use swagger ui to text inputs here;
+You can use swagger ui to test inputs here;
 http://localhost:8080/swagger-ui/index.html
 
 else postman or insomia endpoints
@@ -15,12 +15,8 @@ create a Map to represent JSON Object and List or array to represent JSON Array.
 
 <b>limit</b> -> 7
 
-Calculate Frequency For Word
-http://localhost:8080/api/calculateFrequencyForWord?text={text}&word={word}
+Calculate Frequency For Word http://localhost:8080/api/calculateFrequencyForWord?text={text}&word={word}
 
-Calculate Highest Frequency
-http://localhost:8080/api/calculateHighestFrequency?text={text}
+Calculate Highest Frequency http://localhost:8080/api/calculateHighestFrequency?text={text}
 
-calculateMostFrequentNWords
-
-http://localhost:8080/api/calculateMostFrequentNWords?text={text}&n={limit}
+calculateMostFrequentNWords http://localhost:8080/api/calculateMostFrequentNWords?text={text}&n={limit}

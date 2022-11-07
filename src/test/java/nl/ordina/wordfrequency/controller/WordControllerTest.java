@@ -1,51 +1,93 @@
 package nl.ordina.wordfrequency.controller;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import nl.ordina.wordfrequency.service.WordFrequencyAnalyzerService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.Arrays;
 
-@ExtendWith(SpringExtension.class)
+@SpringBootTest
 @AutoConfigureMockMvc
-class WordControllerTest {
+public class WordControllerTest {
+
+    ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
-    private MockMvc mvc;
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    WordFrequencyAnalyzerService service;
+
     private String text = "Your  $25 AWS Credit Code is listed below. " +
             "Visit the AWS Credits Redemption Page to apply the " +
             "promotional credit code to your AWS account.",
             word = "credit";
-    private Integer frequency = 1;
+    private int frequency = 1;
 
     @Test
-    void itShouldCalculateHighestFrequency() throws Exception {
-        //Given
+    public void itShouldCalculateHighestFrequency() throws Exception {
+        //Given -> Text {sentence}
 
-        RequestBuilder request = MockMvcRequestBuilders.get(String.format("/calculateHighestFrequency?text=%s",text));
-        MvcResult result = mvc.perform(request).andReturn();
-        assertEquals(2, result.getResponse());
+        //when
+        ResultActions resultActions = mockMvc
+                .perform(get("/calculateHighestFrequency")
+                        .contentType(MediaType.APPLICATION_ATOM_XML_VALUE)
+                        .content(objectMapper.writeValueAsString(text)));
+        //then
+        resultActions.andExpect(status().isOk());
+        var frequency = service.calculateHighestFrequency(text);
+        assertThat(frequency).isGreaterThan(0);
+    }
+  
+    @Test
+    public void isShouldcalculateFrequencyForWord() throws Exception {
+        //Given -> Text {sentence}
+
+
+        //when
+        var resultActions = mockMvc
+                .perform(get("/calculateFrequencyForWord")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(text))
+                        .content(objectMapper.writeValueAsString(word)));
+
+        //then
+         resultActions.andExpect(status().isOk());
+        var listOfFrequentWords = service.calculateFrequencyForWord(text, word);
+        assertThat(frequency).isGreaterThan(0);
     }
 
     @Test
-    void isShouldCalculateMostFrequentNWords() throws Exception {
-        //Given
-        RequestBuilder request = MockMvcRequestBuilders.get(String.format("/calculateFrequencyForWord?text=%s&word=%s",text, word));
-        MvcResult result = mvc.perform(request).andReturn();
-        assertEquals(2, result.getResponse());
-    }
+    public void itShouldCalculateMostFrequentNWords() throws Exception {
+        //Given -> Text {sentence}
 
-    @Test
-    void itShouldCalculateMostFrequentNWords() throws Exception {
-        //Given
-        RequestBuilder request = MockMvcRequestBuilders.get(String.format("/calculateMostFrequentNWords?text=%s&frequency=%s",text, frequency));
-        MvcResult result = mvc.perform(request).andReturn();
-        assertEquals(1, result.getResponse());
+
+        //when
+        var resultActions = mockMvc
+                .perform(get("/calculateMostFrequentNWords")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(text))
+                        .content(objectMapper.writeValueAsString(frequency)));
+
+        //then
+        resultActions.andExpect(status().isOk());
+        var listOfFrequentWords = service.calculateMostFrequentNWords(text, frequency);
+        assertThat(Arrays.stream(listOfFrequentWords)).containsSequence();
     }
 }

@@ -1,10 +1,11 @@
 package nl.ordina.wordfrequency.service;
 
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-class WordFrequencyAnalyzerServiceTest {
+import org.junit.Test;
+
+
+public class WordFrequencyAnalyzerServiceTest {
 
     @Test
     void calculateHighestFrequency() {
